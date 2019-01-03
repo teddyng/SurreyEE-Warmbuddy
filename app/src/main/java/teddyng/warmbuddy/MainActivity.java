@@ -30,15 +30,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_device_list);
 
         Intent newint = getIntent();
         address = newint.getStringExtra(DeviceList.EXTRA_ADDRESS);
 
+        setContentView(R.layout.activity_main);
+
         startbtn = (Button) findViewById(R.id.startbtn);
         stopbtn = (Button) findViewById(R.id.stopbtn);
         disconnectbtn = (Button) findViewById(R.id.disconnectbtn);
-        lumn = (TextView) findViewById(R.id.temperature);
+        lumn = (TextView) findViewById(R.id.progress);
 
         new ConnectBT().execute();
 
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(result);
 
             if (!ConnectSuccess) {
-                msg("Connection Failed. Please try again.");
+                msg("Connection Failed. Is it a SPP Bluetooth? Try again.");
                 finish();
             } else {
                 msg("Connected");
