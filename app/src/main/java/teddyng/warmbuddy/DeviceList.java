@@ -30,7 +30,7 @@ public class DeviceList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_list);
 
-        btnPaired = (Button) findViewById(R.id.button);
+        btnPaired = (Button) findViewById(R.id.connectbtn);
         devicelist = (ListView) findViewById(R.id.listView);
 
         myBluetooth = BluetoothAdapter.getDefaultAdapter();
