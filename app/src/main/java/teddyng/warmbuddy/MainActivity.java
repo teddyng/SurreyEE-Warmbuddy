@@ -19,27 +19,26 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity {
 
     Button startbtn, stopbtn, disconnectbtn;
+    TextView tempdisplay;
     String address = null;
-    TextView lumn;
     private ProgressDialog progress;
-    BluetoothAdapter myBluetooth = null;
-    BluetoothSocket btSocket = null;
+    BluetoothAdapter mBTAdapter = null;
+    BluetoothSocket mBTSocket = null;
     private boolean isBtConnected = false;
-    static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    private static final UUID BTUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         Intent newint = getIntent();
         address = newint.getStringExtra(DeviceList.EXTRA_ADDRESS);
 
-        setContentView(R.layout.activity_main);
-
         startbtn = (Button) findViewById(R.id.startbtn);
         stopbtn = (Button) findViewById(R.id.stopbtn);
         disconnectbtn = (Button) findViewById(R.id.disconnectbtn);
-        lumn = (TextView) findViewById(R.id.progress);
+        tempdisplay = (TextView) findViewById(R.id.tempdisplay);
 
         new ConnectBT().execute();
 
@@ -66,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendSignal ( String number ) {
-        if ( btSocket != null ) {
+        if ( mBTSocket != null ) {
             try {
-                btSocket.getOutputStream().write(number.toString().getBytes());
+                mBTSocket.getOutputStream().write(number.toString().getBytes());
             } catch (IOException e) {
                 msg("Error");
             }
@@ -76,9 +75,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void Disconnect () {
-        if ( btSocket!=null ) {
+        if ( mBTSocket !=null ) {
             try {
-                btSocket.close();
+                mBTSocket.close();
             } catch(IOException e) {
                 msg("Error");
             }
@@ -86,6 +85,25 @@ public class MainActivity extends AppCompatActivity {
 
         finish();
     }
+/*
+
+    public void run() {
+        byte[] buffer = new byte[256];
+        int bytes;
+
+        // Keep looping to listen for received messages
+        while (true) {
+            try {
+                bytes = mmInStream.read(buffer);            //read bytes from input buffer
+                String readMessage = new String(buffer, 0, bytes);
+                // Send the obtained bytes to the UI Activity via handler
+                bluetoothIn.obtainMessage(handlerState, bytes, -1, readMessage).sendToTarget();
+            } catch (IOException e) {
+                break;
+            }
+        }
+    }
+*/
 
     private void msg (String s) {
         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
@@ -102,12 +120,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground (Void... devices) {
             try {
-                if ( btSocket==null || !isBtConnected ) {
-                    myBluetooth = BluetoothAdapter.getDefaultAdapter();
-                    BluetoothDevice dispositivo = myBluetooth.getRemoteDevice(address);
-                    btSocket = dispositivo.createInsecureRfcommSocketToServiceRecord(myUUID);
+                if ( mBTSocket ==null || !isBtConnected ) {
+                    mBTAdapter = BluetoothAdapter.getDefaultAdapter();
+                    BluetoothDevice dispositivo = mBTAdapter.getRemoteDevice(address);
+                    mBTSocket = dispositivo.createInsecureRfcommSocketToServiceRecord(BTUUID);
                     BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
-                    btSocket.connect();
+                    mBTSocket.connect();
                 }
             } catch (IOException e) {
                 ConnectSuccess = false;
@@ -121,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(result);
 
             if (!ConnectSuccess) {
-                msg("Connection Failed. Is it a SPP Bluetooth? Try again.");
+                msg("Connection Failed. Please try again.");
                 finish();
             } else {
                 msg("Connected");

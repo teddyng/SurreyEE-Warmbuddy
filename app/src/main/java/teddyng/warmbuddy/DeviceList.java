@@ -18,10 +18,10 @@ import java.util.Set;
 
 public class DeviceList extends AppCompatActivity {
 
-    Button btnPaired;
+    Button connectbtn;
     ListView devicelist;
 
-    private BluetoothAdapter myBluetooth = null;
+    private BluetoothAdapter mBTAdapter = null;
     private Set<BluetoothDevice> pairedDevices;
     public static String EXTRA_ADDRESS = "device_address";
 
@@ -30,19 +30,19 @@ public class DeviceList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_list);
 
-        btnPaired = (Button) findViewById(R.id.connectbtn);
-        devicelist = (ListView) findViewById(R.id.listView);
+        connectbtn = (Button) findViewById(R.id.connectbtn);
+        devicelist = (ListView) findViewById(R.id.devicelist);
 
-        myBluetooth = BluetoothAdapter.getDefaultAdapter();
-        if ( myBluetooth==null ) {
+        mBTAdapter = BluetoothAdapter.getDefaultAdapter();
+        if ( mBTAdapter ==null ) {
             Toast.makeText(getApplicationContext(), "Bluetooth device not available", Toast.LENGTH_LONG).show();
             finish();
-        } else if ( !myBluetooth.isEnabled() ) {
+        } else if ( !mBTAdapter.isEnabled() ) {
             Intent turnBTon = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(turnBTon, 1);
         }
 
-        btnPaired.setOnClickListener(new View.OnClickListener() {
+        connectbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pairedDevicesList();
@@ -51,7 +51,7 @@ public class DeviceList extends AppCompatActivity {
     }
 
     private void pairedDevicesList () {
-        pairedDevices = myBluetooth.getBondedDevices();
+        pairedDevices = mBTAdapter.getBondedDevices();
         ArrayList list = new ArrayList();
 
         if ( pairedDevices.size() > 0 ) {

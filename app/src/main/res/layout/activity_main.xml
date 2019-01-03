@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/progress"
+        android:id="@+id/tempdisplay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -32,7 +32,7 @@
         app:layout_constraintEnd_toStartOf="@+id/stopbtn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progress" />
+        app:layout_constraintTop_toBottomOf="@+id/tempdisplay" />
 
     <Button
         android:id="@+id/stopbtn"
@@ -46,7 +46,7 @@
         app:layout_constraintEnd_toStartOf="@+id/disconnectbtn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/startbtn"
-        app:layout_constraintTop_toBottomOf="@+id/progress" />
+        app:layout_constraintTop_toBottomOf="@+id/tempdisplay" />
 
     <Button
         android:id="@+id/disconnectbtn"
@@ -56,10 +56,10 @@
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:background="@android:color/holo_red_light"
-        android:text="@string/disconnect_pairing"
+        android:text="@string/disconnect"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/stopbtn"
-        app:layout_constraintTop_toBottomOf="@+id/progress" />
+        app:layout_constraintTop_toBottomOf="@+id/tempdisplay" />
 
 </android.support.constraint.ConstraintLayout>
