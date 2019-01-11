@@ -149,4 +149,8 @@ public class MainActivity extends AppCompatActivity {
             progress.dismiss();
         }
     }
+    
+    @Override
+    public void onBackPressed() {
+    }
 }

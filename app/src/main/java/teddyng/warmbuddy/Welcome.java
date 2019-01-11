@@ -1,5 +1,6 @@
 package teddyng.warmbuddy;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +24,5 @@ public class Welcome extends AppCompatActivity {
                 startActivity(new Intent(Welcome.this, DeviceList.class));
             }
         });
-
     }
 }
