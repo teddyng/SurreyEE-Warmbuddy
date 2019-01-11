@@ -5,4 +5,9 @@
     <string name="stop">Stop</string>
     <string name="disconnect">Disconnect</string>
     <string name="progress">Progress</string>
+    <string name="welcome_title">Welcome to WARM BUDDY</string>
+    <string name="welcome_stat1">Get Temperture Readings</string>
+    <string name="welcome_stat2">Keep Health Records</string>
+    <string name="welcome_stat3">Measurement Trends</string>
+    <string name="welcomebtn">Get Started</string>
 </resources>
