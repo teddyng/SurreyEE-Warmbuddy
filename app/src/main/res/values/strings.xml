@@ -1,8 +1,19 @@
 <resources>
-    <string name="app_name">Warmbuddy</string>
+    <string name="app_name">WarmBuddy</string>
     <string name="connect">Connect</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="disconnect">Disconnect</string>
     <string name="progress">Progress</string>
+    <string name="welcome_stat1">Get Temperature Readings</string>
+    <string name="welcome_stat2">Keep Health Records</string>
+    <string name="welcome_stat3">Measurement Trends</string>
+    <string name="welcomebtn">Get Started</string>
+    <string name="warmbuddy">Warmbuddy</string>
+    <string name="welcome_top">Welcome to</string>
+    <string name="welcome_bottom">WARM BUDDY</string>
+    <string name="analytics_body">Get analytical data on your most recent readings.</string>
+    <string name="records_body">Keep track of and manage your recorded health data.</string>
+    <string name="temp_body">Get instant temperature readings from WarmBuddy.</string>
+    <string name="pair">Pair</string>
 </resources>
