@@ -8,12 +8,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
@@ -72,6 +74,23 @@ public class MainActivity extends AppCompatActivity {
                 msg("Error");
             }
         }
+    }
+
+    public void receiveData() throws IOException{
+        InputStream socketInputStream =  mBTSocket.getInputStream();
+        byte[] buffer = new byte[256];
+        int bytes;
+        
+        while (true) {
+            try {
+                bytes = socketInputStream.read(buffer);
+                String readMessage = new String(buffer, 0, bytes);
+                Log.i("logging", readMessage + "");
+            } catch (IOException e) {
+                break;
+            }
+        }
+
     }
 
     private void Disconnect () {
