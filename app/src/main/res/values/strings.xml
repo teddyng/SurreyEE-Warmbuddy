@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">WarmBuddy</string>
     <string name="connect">Connect</string>
-    <string name="start">Start</string>
-    <string name="stop">Stop</string>
+    <string name="start">Measure</string>
+    <string name="stop">Cancel</string>
     <string name="disconnect">Disconnect</string>
     <string name="progress">Progress</string>
     <string name="welcome_stat1">Get Temperature Readings</string>

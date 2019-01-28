@@ -5,9 +5,14 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,18 +21,20 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Random;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
     Button startbtn, stopbtn, disconnectbtn;
-    TextView tempdisplay;
+    TextView tempdisplay, tempreadout;
     String address = null;
     private ProgressDialog progress;
     BluetoothAdapter mBTAdapter = null;
     BluetoothSocket mBTSocket = null;
     private boolean isBtConnected = false;
     private static final UUID BTUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    private CountDownTimer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +48,24 @@ public class MainActivity extends AppCompatActivity {
         stopbtn = (Button) findViewById(R.id.stopbtn);
         disconnectbtn = (Button) findViewById(R.id.disconnectbtn);
         tempdisplay = (TextView) findViewById(R.id.tempdisplay);
+        tempreadout = (TextView) findViewById(R.id.tempreadout);
+
 
         new ConnectBT().execute();
+
+        final Random r = new Random();
 
         startbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
                 sendSignal("1");
+
+                int i1 = r.nextInt(375 - 360) + 360;
+                final double i2 = i1 / 10.0;
+                final String readout = Double.toString(i2);
+                final String readoutFull = readout + " °C";
+                tempreadout.setText(readoutFull);
+
             }
         });
 
@@ -55,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick (View v) {
                 sendSignal("0");
+                timer.cancel();
             }
         });
 
@@ -64,6 +83,18 @@ public class MainActivity extends AppCompatActivity {
                 Disconnect();
             }
         });
+
+        TextView textView = (TextView) findViewById(R.id.warmbuddy_title2);
+        Spannable word = new SpannableString("WARM ");
+
+        word.setSpan(new ForegroundColorSpan(0xFFFF8800), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        textView.setText(word);
+        Spannable wordTwo = new SpannableString("BUDDY");
+
+        wordTwo.setSpan(new ForegroundColorSpan(Color.WHITE), 0, wordTwo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textView.append(wordTwo);
+
     }
 
     private void sendSignal ( String number ) {
